@@ -4,6 +4,7 @@ import { makeStyles, MenuItem, TextField } from "@material-ui/core";
 interface AutcompleteProps {
   // completionFunc:  (input: string) => string[];
   words: string[];
+  maxWordsVisible: number;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -21,10 +22,12 @@ function Autocomplete(props: AutcompleteProps) {
   const [input, setInput] = useState<string>("");
   const [filteredWords, setFilteredWords] = useState<string[]>(props.words);
   const [isListVisible, setIsListVisible] = useState<boolean>(false);
+  // const [highlightedIndex, setHighlightedIndex] = useSt
+
   useEffect(() => {
     // TODO: how to do this actually?
-    const re = new RegExp(input, "g");
-    setFilteredWords(props.words.filter((word) => re.exec(word)));
+    const re = new RegExp(input);
+    setFilteredWords(props.words.filter((word) => re.test(word)).slice(0, props.maxWordsVisible));
   }, [input, props.words]);
 
   const showList = () => {
@@ -38,10 +41,14 @@ function Autocomplete(props: AutcompleteProps) {
     showList();
   };
   const handleClickWord = (word: string) => {
-    console.log(word);
     setInput(word);
     hideList();
   };
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "down") {
+
+    }
+  }
 
   return (
     <div
@@ -57,6 +64,7 @@ function Autocomplete(props: AutcompleteProps) {
         value={input}
         onClick={showList}
         onChange={handleChange}
+        // onKeyDown={handleKeyDown}
       />
       <div
         // hidden={!isListVisible}

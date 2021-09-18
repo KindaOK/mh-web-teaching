@@ -4,7 +4,7 @@ import { Counter } from "./features/counter/Counter";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import ComponentsAndHooksPage from "./pages/componentsAndHooks/ComponentsAndHooksPage";
-import Autocomplete from "./pages/introToAsync/autocomplete/Autocomplete";
+import AsyncPage from "./pages/introToAsync/AsyncPage";
 
 function App() {
   return (
@@ -63,7 +63,7 @@ function App() {
           <ComponentsAndHooksPage />
         </Route>
         <Route path={"/intro-to-async"}>
-          <Autocomplete words={["hihijhhis", "this", "asdfghjkl", "mnbvcxz", "qwertyuiop"]}/>
+          <AsyncPage />
         </Route>
       </Switch>
     </Router>

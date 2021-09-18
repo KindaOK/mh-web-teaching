@@ -57,6 +57,11 @@ function SimpleNotes() {
     //  if there are no saved notes, then parse an empty array
     const savedNotes = JSON.parse(localStorage.getItem("notes") ?? "[]");
     if (savedNotes?.length) {
+      // when the notes are loaded, the Datetimes are still strings
+      savedNotes.forEach((note: Record<string, unknown>) => {
+        // so we parse them into Dates
+        note.dateCreated = new Date(note.dateCreated as string);
+      })
       setNotes(savedNotes);
     }
   }, []);
