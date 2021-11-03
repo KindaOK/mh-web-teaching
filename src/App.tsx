@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import { Counter } from "./features/counter/Counter";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import ComponentsAndHooksPage from "./pages/componentsAndHooks/ComponentsAndHook
 import AsyncPage from "./pages/introToAsync/AsyncPage";
 
 function App() {
+  const [isVisible, setIsVisible] = useState(true);
   return (
     <Router>
       <Switch>

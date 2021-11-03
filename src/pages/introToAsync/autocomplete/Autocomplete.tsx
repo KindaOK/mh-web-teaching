@@ -3,32 +3,33 @@ import { makeStyles, MenuItem, TextField } from "@material-ui/core";
 
 interface AutcompleteProps {
   // completionFunc:  (input: string) => string[];
-  words: string[];
+  getWords: (input: string) => Promise<string[]>;
   maxWordsVisible: number;
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGow: 1,
   },
   words: {
     position: "absolute",
-    zIndex: 1000,
+    height: "25%",
+    overflowY: "auto",
+    background: "whitesmoke",
   },
 }));
 
 function Autocomplete(props: AutcompleteProps) {
   const classes = useStyles();
   const [input, setInput] = useState<string>("");
-  const [filteredWords, setFilteredWords] = useState<string[]>(props.words);
+  const [filteredWords, setFilteredWords] = useState<string[]>([]);
   const [isListVisible, setIsListVisible] = useState<boolean>(false);
   // const [highlightedIndex, setHighlightedIndex] = useSt
 
+  // whenever we need to fetch fresh data, call the fetch function given through props and use that to update things
   useEffect(() => {
-    // TODO: how to do this actually?
-    const re = new RegExp(input);
-    setFilteredWords(props.words.filter((word) => re.test(word)).slice(0, props.maxWordsVisible));
-  }, [input, props.words]);
+    // it may be better for the function given in props to control the number of items displayed
+    props.getWords(input).then((words) => setFilteredWords(words.slice(0, props.maxWordsVisible)))
+  }, [input, props.getWords]);
 
   const showList = () => {
     setIsListVisible(true);
@@ -44,11 +45,12 @@ function Autocomplete(props: AutcompleteProps) {
     setInput(word);
     hideList();
   };
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "down") {
 
-    }
-  }
+  // const handleKeyDown = (event: KeyboardEvent) => {
+  //   if (event.key === "down") {
+  //
+  //   }
+  // }
 
   return (
     <div
@@ -80,15 +82,5 @@ function Autocomplete(props: AutcompleteProps) {
     </div>
   );
 }
-
-// interface AutocompleteEntryProps {
-//   word: string;
-// }
-
-// function AutocompleteEntry(props: AutocompleteEntryProps) {
-//   return <MenuItem
-//
-//   />;
-// }
 
 export default Autocomplete;
