@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
 import { Counter } from "./features/counter/Counter";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import "./App.css";
 import ComponentsAndHooksPage from "./pages/componentsAndHooks/ComponentsAndHooksPage";
 import AsyncPage from "./pages/introToAsync/AsyncPage";
+import ImageCarousel from "./pages/imageCarousel/imageCarousel";
+import ImageCarouselPage from "./pages/imageCarousel/imageCarouselPage";
 
 function App() {
   const [isVisible, setIsVisible] = useState(true);
   return (
     <Router>
       <Switch>
-        <Route path={"/default"}>
+        <Route path={"/default/"}>
           <div className="App">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
@@ -60,11 +62,17 @@ function App() {
             </header>
           </div>
         </Route>
-        <Route path={"/components-and-hooks"}>
+        <Route path={"/components-and-hooks/"}>
           <ComponentsAndHooksPage />
         </Route>
-        <Route path={"/intro-to-async"}>
+        <Route path={"/intro-to-async/"}>
           <AsyncPage />
+        </Route>
+        <Route path={"/image-carousel/"}>
+          <ImageCarouselPage />
+        </Route>
+        <Route path={"/"}>
+          <Redirect to={"/components-and-hooks/"} />
         </Route>
       </Switch>
     </Router>
